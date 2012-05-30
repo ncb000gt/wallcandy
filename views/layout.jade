@@ -1,0 +1,13 @@
+!!! 5
+html
+  head
+    - if (styles)
+      - each style in styles 
+        link(href=style,rel="stylesheet")
+  body
+    .content
+      !{body}
+    .scripts
+      - if (scripts)
+        - each script in scripts
+          script(src=script)
