@@ -1,8 +1,6 @@
 function line(data) {
-  console.log(data);
-
   var w = 20,
-      h = 80;
+      h = 100;
 
   var x = d3.scale.linear()
             .domain([0, 1])

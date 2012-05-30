@@ -23,23 +23,26 @@ app.configure(function(){
 
 /****************************************/
 mongodb.open(function(err, db) {
-  app.get('/data/:type/data', function(req, res) {
+  app.get('/data/:type/data/:vfield', function(req, res) {
     var type = req.params.type;
+    var vfield = req.params.vfield;
     db.collection(type, function(err, col) {
       col.find({}, {sort: 'created'}, function(err, cursor) {
         cursor.toArray(function(err, rows) {
+
           var max_  = (function max(data, idx, _max) {
             if (data.length === idx) return _max;
             var row = data[idx];
-            if (_max < row.avg) _max = row.avg;
+            if (_max < row[vfield]) _max = row.avg;
             return max(data, ++idx, _max);
           })(rows, 0, 0);
+
           var data = {
             total: rows.length,
-            max: 80,
+            max: max_,
             plots: rows.map(function(row) {
               return {
-                value: (row.avg/max_)*80,
+                value: (row[vfield]/max_)*100,
                 time: row.created
               }
             })
