@@ -23,6 +23,15 @@ app.configure(function(){
 
 /****************************************/
 mongodb.open(function(err, db) {
+  app.get('/type/:type', function(req, res) {
+    var type = req.params.type;
+    db.collection('types', function(err, col) {
+      col.findOne({name:type}, function(err, type) {
+        res.json(type);
+      });
+    });
+  });
+
   app.get('/data/:type/data/:vfield', function(req, res) {
     var type = req.params.type;
     var vfield = req.params.vfield;
@@ -42,6 +51,7 @@ mongodb.open(function(err, db) {
             max: max_,
             plots: rows.map(function(row) {
               return {
+                truevalue: row[vfield],
                 value: (row[vfield]/max_)*100,
                 time: row.created
               }

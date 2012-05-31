@@ -1,4 +1,4 @@
-curl -XPOST http://localhost:8003/data/reqs -d '{"name":"reqs","desc":"request data"}' -H"Content-Type: application/json"
+curl -XPOST http://localhost:8003/data/reqs -d '{"name":"reqs","desc":"request data", "graphs": ["avg"]}' -H"Content-Type: application/json"
 curl -XPUT http://localhost:8003/data/reqs -d '{"avg":"30"}' -H"Content-Type: application/json"                      
 curl -XPUT http://localhost:8003/data/reqs -d '{"avg":"20"}' -H"Content-Type: application/json"
 curl -XPUT http://localhost:8003/data/reqs -d '{"avg":"26"}' -H"Content-Type: application/json"
